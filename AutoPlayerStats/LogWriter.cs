@@ -18,7 +18,6 @@ namespace AutoPlayerStats
 
             string logFilePath = Path.Combine(Environment.GetFolderPath(
                 Environment.SpecialFolder.ApplicationData), "AutoPlayerStats\\" + "Log-" + DateTime.Today.ToString("MM-dd-yyyy") + "." + "log");
-            Console.WriteLine(logFilePath);
             logFileInfo = new FileInfo(logFilePath);
             logDirInfo = new DirectoryInfo(logFileInfo.DirectoryName);
             if (!logDirInfo.Exists) logDirInfo.Create();

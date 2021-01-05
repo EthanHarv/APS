@@ -28,13 +28,11 @@ namespace AutoPlayerStats
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
         private void Form1_Load(object sender, EventArgs e)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\.lunarclient\logs\launcher\"; // TODO: Work with every client possible
-            txtBoxKey.Text = Properties.Settings.Default.HypixelKey;
-
             MessageBoxManager.Yes = "Whitelist"; // TODO: Probably would be better to just use a dedicated form, forget why I did it this way
             MessageBoxManager.No = "Blacklist";
             MessageBoxManager.Register();
 
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\.lunarclient\logs\launcher\"; // TODO: Work with every client possible
             CreateFileWatcher(path); // TODO - Doesn't seem to work with forge (doesn't close log file?) - find a workaround, maybe just constant calls? dunno
 
             fixLists();
@@ -65,7 +63,7 @@ namespace AutoPlayerStats
             }
             catch (Exception ex)
             {
-                LogWriter.Write("Exception: " + ex + "\n");
+                LogWriter.Write("Exception: " + ex);
             }
             List<Player> players = new List<Player>();
             foreach (string i in text)
@@ -77,7 +75,7 @@ namespace AutoPlayerStats
                     {
                         players.Add(new Player(name));
                     }
-                    LogWriter.Write("Loaded Players\n");
+                    LogWriter.Write("Loaded Players");
                 }
             }
             if (players.Count == 0)
@@ -128,7 +126,7 @@ namespace AutoPlayerStats
             }
             catch (Exception ex)
             {
-                LogWriter.Write("Error in getting API uses\n" + ex + "\n");
+                LogWriter.Write("Error in getting API uses\n" + ex);
             }
         }
 
@@ -147,115 +145,10 @@ namespace AutoPlayerStats
             }
         }
 
-        private void btnSaveKey_Click(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.HypixelKey = txtBoxKey.Text;
-            Properties.Settings.Default.Save();
-        }
-
-        private void Form1_Resize(object sender, EventArgs e)
+        private void Form1_Resize(object sender, EventArgs e) // TODO: Hopefully make it resizable in the future easily
         {
             ((Form1)sender).Width = 1216;
             ((Form1)sender).Height = 804;
-        }
-
-        private void btnFriends_Click(object sender, EventArgs e)
-        {
-            Form1 frm1 = (Form1)Application.OpenForms["Form1"];
-            List<string> uuids = new List<string>();
-            string ownUUID = "";
-            try
-            {
-
-                string key = Properties.Settings.Default.HypixelKey;
-                var hypxUrl = @"https://api.hypixel.net/key?key=" + key; // Hypixel API Call to get UUID of keyholder
-                WebRequest wrGETURL2;
-                wrGETURL2 = WebRequest.Create(hypxUrl);
-
-                Stream objStream2;
-                objStream2 = wrGETURL2.GetResponse().GetResponseStream();
-
-                StreamReader objReader2 = new StreamReader(objStream2);
-
-                string hypixelResponse = objReader2.ReadLine();
-                
-                dynamic hypixelData = JsonConvert.DeserializeObject(hypixelResponse);
-
-                ownUUID = hypixelData.record.owner;
-
-                var hypxFriendUrl = @"https://api.hypixel.net/friends?key=" + key + "&uuid=" + ownUUID; // Hypixel API Call to get stats
-                WebRequest wrGETURLFriend;
-                wrGETURLFriend = WebRequest.Create(hypxFriendUrl);
-
-                Stream objStreamFriend;
-                objStreamFriend = wrGETURLFriend.GetResponse().GetResponseStream();
-
-                StreamReader objReaderFriend = new StreamReader(objStreamFriend);
-
-                string hypixelFriendResponse = objReaderFriend.ReadLine();
-
-                dynamic hypixelFriendData = JsonConvert.DeserializeObject(hypixelFriendResponse);
-
-                foreach (var uuid in hypixelFriendData.records)
-                {
-                    if (uuid.uuidReceiver == ownUUID.Replace("-", ""))
-                        uuids.Add((string)uuid.uuidSender);
-                    else
-                        uuids.Add((string)uuid.uuidReceiver);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogWriter.Write("Error loading friends: " + ex +"\n");
-            }
-            foreach (string uuid in uuids)
-            {
-                string name = getNameFromUUID(uuid);
-                Console.WriteLine(name);
-                Properties.Settings.Default.fList.Add(name);
-            }
-            string ownName = getNameFromUUID(ownUUID);
-            Console.WriteLine(ownName);
-            Properties.Settings.Default.fList.Add(ownName);
-            Properties.Settings.Default.Save();
-
-            fixLists();
-
-            LogWriter.Write("Added " + uuids.Count + " friends + own name.\n");
-        }
-
-        private string getNameFromUUID(string uuid)
-        {
-            int count = 0;
-            int maxtries = 5; // Calling this should be a pretty infrequent event overall (should only be called by "get friends as whitelist," so its fine jacking up the retry number a bit
-            while (count <= maxtries)
-            {
-                count++;
-                Form1 frm1 = (Form1)Application.OpenForms["Form1"];
-                string mojUrl = @"https://api.mojang.com/user/profile/" + uuid; // Mojang API - Get the user name // TODO: Switch to playerdb API possibly
-                HttpWebRequest wrGETURL = (HttpWebRequest)WebRequest.Create(mojUrl);
-
-                wrGETURL.Timeout = 1000;
-
-                var responseCode = ((HttpWebResponse)wrGETURL.GetResponse()).StatusCode;
-
-                Stream objStream;
-                objStream = wrGETURL.GetResponse().GetResponseStream();
-
-                StreamReader objReader = new StreamReader(objStream);
-                string mojangResponse = objReader.ReadLine();
-
-                if (responseCode != HttpStatusCode.OK) // If nothing is returned
-                {
-                    LogWriter.Write("Error in getNameFromUUID()\n");
-                    throw new Exception("Mojang Not Ok");
-                }
-
-                dynamic mojangData = JsonConvert.DeserializeObject(mojangResponse);
-
-                return mojangData.name;
-            }
-            return null;
         }
 
         public static void fixLists()
@@ -275,10 +168,13 @@ namespace AutoPlayerStats
             Properties.Settings.Default.Save();
         }
 
-        private void btnEditList_Click(object sender, EventArgs e)
+        private void btnSettings_Click(object sender, EventArgs e)
         {
-            FormListEditor editor = new FormListEditor();
-            editor.ShowDialog();
+            this.TopMost = false; // So they dont fight
+            UserSettings settings = new UserSettings();
+            settings.TopMost = true;
+            settings.ShowDialog();
+            this.TopMost = true;
         }
     }
 }

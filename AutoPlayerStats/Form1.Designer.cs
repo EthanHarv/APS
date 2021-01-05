@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.txtBoxKey = new System.Windows.Forms.TextBox();
-            this.labelHypKey = new System.Windows.Forms.Label();
-            this.btnSaveKey = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -39,41 +36,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.playerPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
-            this.btnFriends = new System.Windows.Forms.Button();
-            this.btnEditList = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.lblApi = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.lblApiTotal = new System.Windows.Forms.Label();
+            this.btnSettings = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // txtBoxKey
-            // 
-            this.txtBoxKey.BackColor = System.Drawing.SystemColors.Window;
-            this.txtBoxKey.Location = new System.Drawing.Point(999, 13);
-            this.txtBoxKey.Name = "txtBoxKey";
-            this.txtBoxKey.Size = new System.Drawing.Size(189, 20);
-            this.txtBoxKey.TabIndex = 3;
-            // 
-            // labelHypKey
-            // 
-            this.labelHypKey.AutoSize = true;
-            this.labelHypKey.Location = new System.Drawing.Point(925, 16);
-            this.labelHypKey.Name = "labelHypKey";
-            this.labelHypKey.Size = new System.Drawing.Size(65, 13);
-            this.labelHypKey.TabIndex = 4;
-            this.labelHypKey.Text = "Hypixel Key:";
-            // 
-            // btnSaveKey
-            // 
-            this.btnSaveKey.Location = new System.Drawing.Point(1113, 39);
-            this.btnSaveKey.Name = "btnSaveKey";
-            this.btnSaveKey.Size = new System.Drawing.Size(75, 23);
-            this.btnSaveKey.TabIndex = 5;
-            this.btnSaveKey.Text = "Save Key";
-            this.btnSaveKey.UseVisualStyleBackColor = true;
-            this.btnSaveKey.Click += new System.EventHandler(this.btnSaveKey_Click);
             // 
             // label1
             // 
@@ -130,7 +99,7 @@
             this.playerPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.playerPanel.Location = new System.Drawing.Point(12, 12);
             this.playerPanel.Name = "playerPanel";
-            this.playerPanel.Size = new System.Drawing.Size(907, 744);
+            this.playerPanel.Size = new System.Drawing.Size(1016, 744);
             this.playerPanel.TabIndex = 11;
             // 
             // label6
@@ -142,26 +111,6 @@
             this.label6.Size = new System.Drawing.Size(84, 13);
             this.label6.TabIndex = 12;
             this.label6.Text = "Red: Blacklisted";
-            // 
-            // btnFriends
-            // 
-            this.btnFriends.Location = new System.Drawing.Point(928, 39);
-            this.btnFriends.Name = "btnFriends";
-            this.btnFriends.Size = new System.Drawing.Size(133, 23);
-            this.btnFriends.TabIndex = 13;
-            this.btnFriends.Text = "Load Friends as Whitelist";
-            this.btnFriends.UseVisualStyleBackColor = true;
-            this.btnFriends.Click += new System.EventHandler(this.btnFriends_Click);
-            // 
-            // btnEditList
-            // 
-            this.btnEditList.Location = new System.Drawing.Point(928, 68);
-            this.btnEditList.Name = "btnEditList";
-            this.btnEditList.Size = new System.Drawing.Size(75, 23);
-            this.btnEditList.TabIndex = 14;
-            this.btnEditList.Text = "Edit List";
-            this.btnEditList.UseVisualStyleBackColor = true;
-            this.btnEditList.Click += new System.EventHandler(this.btnEditList_Click);
             // 
             // label7
             // 
@@ -176,7 +125,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(925, 98);
+            this.label8.Location = new System.Drawing.Point(1035, 11);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(129, 13);
             this.label8.TabIndex = 16;
@@ -185,7 +134,7 @@
             // lblApi
             // 
             this.lblApi.AutoSize = true;
-            this.lblApi.Location = new System.Drawing.Point(1053, 99);
+            this.lblApi.Location = new System.Drawing.Point(1163, 12);
             this.lblApi.Name = "lblApi";
             this.lblApi.Size = new System.Drawing.Size(13, 13);
             this.lblApi.TabIndex = 17;
@@ -194,7 +143,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(925, 120);
+            this.label9.Location = new System.Drawing.Point(1035, 33);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(88, 13);
             this.label9.TabIndex = 18;
@@ -203,11 +152,21 @@
             // lblApiTotal
             // 
             this.lblApiTotal.AutoSize = true;
-            this.lblApiTotal.Location = new System.Drawing.Point(1011, 121);
+            this.lblApiTotal.Location = new System.Drawing.Point(1121, 34);
             this.lblApiTotal.Name = "lblApiTotal";
             this.lblApiTotal.Size = new System.Drawing.Size(13, 13);
             this.lblApiTotal.TabIndex = 19;
             this.lblApiTotal.Text = "0";
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.Location = new System.Drawing.Point(1038, 50);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(150, 23);
+            this.btnSettings.TabIndex = 20;
+            this.btnSettings.Text = "Settings";
+            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // Form1
             // 
@@ -215,13 +174,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1200, 765);
+            this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.lblApiTotal);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.lblApi);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.btnEditList);
-            this.Controls.Add(this.btnFriends);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.playerPanel);
             this.Controls.Add(this.label5);
@@ -229,9 +187,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnSaveKey);
-            this.Controls.Add(this.labelHypKey);
-            this.Controls.Add(this.txtBoxKey);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -246,9 +201,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.TextBox txtBoxKey;
-        private System.Windows.Forms.Label labelHypKey;
-        private System.Windows.Forms.Button btnSaveKey;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -256,13 +208,12 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.FlowLayoutPanel playerPanel;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button btnFriends;
-        private System.Windows.Forms.Button btnEditList;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label lblApi;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblApiTotal;
+        private System.Windows.Forms.Button btnSettings;
     }
 }
 
