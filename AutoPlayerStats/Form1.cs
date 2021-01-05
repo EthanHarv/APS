@@ -28,16 +28,18 @@ namespace AutoPlayerStats
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
         private void Form1_Load(object sender, EventArgs e)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\.lunarclient\logs\launcher\";
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\.lunarclient\logs\launcher\"; // TODO: Work with every client possible
             txtBoxKey.Text = Properties.Settings.Default.HypixelKey;
 
-            MessageBoxManager.Yes = "Whitelist"; // TODO: Probably would be better to just use a dedicated form, forget why I did it this way 
+            MessageBoxManager.Yes = "Whitelist"; // TODO: Probably would be better to just use a dedicated form, forget why I did it this way
             MessageBoxManager.No = "Blacklist";
             MessageBoxManager.Register();
 
-            CreateFileWatcher(path);
+            CreateFileWatcher(path); // TODO - Doesn't seem to work with forge (doesn't close log file?) - find a workaround, maybe just constant calls? dunno
 
             fixLists();
+
+            LogWriter.Write("Started on " + DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss"));
         }
 
         public void CreateFileWatcher(string path)
@@ -63,7 +65,7 @@ namespace AutoPlayerStats
             }
             catch (Exception ex)
             {
-                frm1.txtLog.Invoke((MethodInvoker)delegate { frm1.txtLog.AppendText("Exception: " + ex + "\n"); });
+                LogWriter.Write("Exception: " + ex + "\n");
             }
             List<Player> players = new List<Player>();
             foreach (string i in text)
@@ -75,7 +77,7 @@ namespace AutoPlayerStats
                     {
                         players.Add(new Player(name));
                     }
-                    frm1.txtLog.Invoke((MethodInvoker)delegate { frm1.txtLog.AppendText("Loaded Players\n"); });
+                    LogWriter.Write("Loaded Players\n");
                 }
             }
             if (players.Count == 0)
@@ -126,7 +128,7 @@ namespace AutoPlayerStats
             }
             catch (Exception ex)
             {
-                frm1.txtLog.Invoke((MethodInvoker)delegate { frm1.txtLog.AppendText("Error in getting API uses\n" + ex + "\n"); });
+                LogWriter.Write("Error in getting API uses\n" + ex + "\n");
             }
         }
 
@@ -204,7 +206,7 @@ namespace AutoPlayerStats
             }
             catch (Exception ex)
             {
-                frm1.txtLog.Invoke((MethodInvoker)delegate { frm1.txtLog.AppendText("Error loading friends: " + ex +"\n"); });
+                LogWriter.Write("Error loading friends: " + ex +"\n");
             }
             foreach (string uuid in uuids)
             {
@@ -219,7 +221,7 @@ namespace AutoPlayerStats
 
             fixLists();
 
-            frm1.txtLog.Invoke((MethodInvoker)delegate { frm1.txtLog.AppendText("Added " + uuids.Count + " friends + your own name.\n"); });
+            LogWriter.Write("Added " + uuids.Count + " friends + own name.\n");
         }
 
         private string getNameFromUUID(string uuid)
@@ -245,7 +247,7 @@ namespace AutoPlayerStats
 
                 if (responseCode != HttpStatusCode.OK) // If nothing is returned
                 {
-                    frm1.txtLog.Invoke((MethodInvoker)delegate { frm1.txtLog.AppendText("Error in getNameFromUUID()\n"); });
+                    LogWriter.Write("Error in getNameFromUUID()\n");
                     throw new Exception("Mojang Not Ok");
                 }
 

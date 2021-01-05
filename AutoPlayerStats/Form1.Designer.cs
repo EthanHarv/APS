@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.txtLog = new System.Windows.Forms.RichTextBox();
             this.txtBoxKey = new System.Windows.Forms.TextBox();
             this.labelHypKey = new System.Windows.Forms.Label();
             this.btnSaveKey = new System.Windows.Forms.Button();
@@ -49,20 +48,10 @@
             this.lblApiTotal = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // txtLog
-            // 
-            this.txtLog.BackColor = System.Drawing.SystemColors.Window;
-            this.txtLog.HideSelection = false;
-            this.txtLog.Location = new System.Drawing.Point(925, 12);
-            this.txtLog.Name = "txtLog";
-            this.txtLog.Size = new System.Drawing.Size(263, 288);
-            this.txtLog.TabIndex = 0;
-            this.txtLog.Text = "";
-            // 
             // txtBoxKey
             // 
             this.txtBoxKey.BackColor = System.Drawing.SystemColors.Window;
-            this.txtBoxKey.Location = new System.Drawing.Point(999, 306);
+            this.txtBoxKey.Location = new System.Drawing.Point(999, 13);
             this.txtBoxKey.Name = "txtBoxKey";
             this.txtBoxKey.Size = new System.Drawing.Size(189, 20);
             this.txtBoxKey.TabIndex = 3;
@@ -70,7 +59,7 @@
             // labelHypKey
             // 
             this.labelHypKey.AutoSize = true;
-            this.labelHypKey.Location = new System.Drawing.Point(925, 309);
+            this.labelHypKey.Location = new System.Drawing.Point(925, 16);
             this.labelHypKey.Name = "labelHypKey";
             this.labelHypKey.Size = new System.Drawing.Size(65, 13);
             this.labelHypKey.TabIndex = 4;
@@ -78,7 +67,7 @@
             // 
             // btnSaveKey
             // 
-            this.btnSaveKey.Location = new System.Drawing.Point(1113, 332);
+            this.btnSaveKey.Location = new System.Drawing.Point(1113, 39);
             this.btnSaveKey.Name = "btnSaveKey";
             this.btnSaveKey.Size = new System.Drawing.Size(75, 23);
             this.btnSaveKey.TabIndex = 5;
@@ -156,7 +145,7 @@
             // 
             // btnFriends
             // 
-            this.btnFriends.Location = new System.Drawing.Point(928, 332);
+            this.btnFriends.Location = new System.Drawing.Point(928, 39);
             this.btnFriends.Name = "btnFriends";
             this.btnFriends.Size = new System.Drawing.Size(133, 23);
             this.btnFriends.TabIndex = 13;
@@ -166,7 +155,7 @@
             // 
             // btnEditList
             // 
-            this.btnEditList.Location = new System.Drawing.Point(928, 361);
+            this.btnEditList.Location = new System.Drawing.Point(928, 68);
             this.btnEditList.Name = "btnEditList";
             this.btnEditList.Size = new System.Drawing.Size(75, 23);
             this.btnEditList.TabIndex = 14;
@@ -187,7 +176,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(925, 391);
+            this.label8.Location = new System.Drawing.Point(925, 98);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(129, 13);
             this.label8.TabIndex = 16;
@@ -196,7 +185,7 @@
             // lblApi
             // 
             this.lblApi.AutoSize = true;
-            this.lblApi.Location = new System.Drawing.Point(1053, 392);
+            this.lblApi.Location = new System.Drawing.Point(1053, 99);
             this.lblApi.Name = "lblApi";
             this.lblApi.Size = new System.Drawing.Size(13, 13);
             this.lblApi.TabIndex = 17;
@@ -205,7 +194,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(925, 413);
+            this.label9.Location = new System.Drawing.Point(925, 120);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(88, 13);
             this.label9.TabIndex = 18;
@@ -214,7 +203,7 @@
             // lblApiTotal
             // 
             this.lblApiTotal.AutoSize = true;
-            this.lblApiTotal.Location = new System.Drawing.Point(1011, 414);
+            this.lblApiTotal.Location = new System.Drawing.Point(1011, 121);
             this.lblApiTotal.Name = "lblApiTotal";
             this.lblApiTotal.Size = new System.Drawing.Size(13, 13);
             this.lblApiTotal.TabIndex = 19;
@@ -243,7 +232,6 @@
             this.Controls.Add(this.btnSaveKey);
             this.Controls.Add(this.labelHypKey);
             this.Controls.Add(this.txtBoxKey);
-            this.Controls.Add(this.txtLog);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -266,7 +254,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        public System.Windows.Forms.RichTextBox txtLog;
         private System.Windows.Forms.FlowLayoutPanel playerPanel;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnFriends;

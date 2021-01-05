@@ -105,13 +105,13 @@ namespace AutoPlayerStats
                 catch (WebException)
                 {
                     if (count >= maxtries)
-                        frm1.txtLog.Invoke((MethodInvoker)delegate { frm1.txtLog.AppendText("Nick Detected - API Error thrown\n"); });
+                        LogWriter.Write("Nick Detected - API Error thrown\n");
                     this.IsNick = true;
                     count++;
                 }
                 catch (Exception e)
                 {
-                    frm1.txtLog.Invoke((MethodInvoker)delegate { frm1.txtLog.AppendText("Nick Detected - " + e +"\n"); });
+                    LogWriter.Write("Nick Detected - " + e +"\n");
                     this.IsNick = true;
                     break;
                 }

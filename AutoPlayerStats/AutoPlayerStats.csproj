@@ -66,6 +66,7 @@
     <Compile Include="FormListEditor.Designer.cs">
       <DependentUpon>FormListEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogWriter.cs" />
     <Compile Include="MessageBoxManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
