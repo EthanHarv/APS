@@ -14,13 +14,15 @@ namespace AutoPlayerStats
     public class Player
     {
         public string Name { get; private set; }
-        public bool IsNick { get; private set; }
+        public bool IsNick { get; private set; } = false;
+        // TODO - Make dynamic instead of static. Gonna continue using this while I make sure party detection works, but will probably make a branch soon to make this dynamic
+        public bool IsSuspectedParty { get; private set; } = false;
         public int Stars { get; private set; } = 0;
         public int Finals { get; private set; } = 0;
         public int Winstreak { get; private set; } = 0;
         public int GamesPlayed { get; private set; } = 0;
         public double FKDR { get; private set; } = 0;
-        public Panel Panel { get; private set; } 
+        public Panel Panel { get; private set; } // I need to re-do the whole panel system, probably a new panel class that then has a Player object inside it
 
         public Player(string name)
         {
@@ -85,6 +87,8 @@ namespace AutoPlayerStats
 
                     this.Stars = (int)hypixelData.player.achievements.bedwars_level;
                     this.GamesPlayed = (int)hypixelData.player.stats.Bedwars.games_played_bedwars;
+                    if (hypixelData.player.channel == "PARTY") // NOT reliable, but is a good indication, especially for random parties - May combine with frienddetection, but unsure if API usage intensity would be too much
+                        this.IsSuspectedParty = true;
                     if (hypixelData.player.stats.Bedwars.four_four_final_kills_bedwars != null && hypixelData.player.stats.Bedwars.four_four_final_deaths_bedwars != null)
                     {
                         this.FKDR = ((double)hypixelData.player.stats.Bedwars.four_four_final_kills_bedwars / (double)hypixelData.player.stats.Bedwars.four_four_final_deaths_bedwars);
@@ -120,12 +124,15 @@ namespace AutoPlayerStats
 
             // TODO: Make new panel system! Customizable controls & such, maybe arrange horizontal instead of vertical like the other overlays do.
             // Also, honestly can't imagine the bwstats guy would be very happy with me for opensourcing all this, but maybe try to integrate their hacker/sniper database?
+            // (I have now found their API - unsure if its meant to be public, but will probably integrate soon unless he says otherwise)
 
             var labelName = new Label();
             labelName.AutoSize = true;
             labelName.Location = new Point(5, 0);
             labelName.Font = new Font(labelName.Font, FontStyle.Bold);
             labelName.Text = Name;
+            if (IsSuspectedParty)
+                labelName.Text = Name + " (Party)"; // TODO: Temporary! Redo this all during the panel rewrite
 
             var labelStars = new Label();
             labelStars.AutoSize = true;
