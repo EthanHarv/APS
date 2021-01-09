@@ -11,27 +11,37 @@ namespace AutoPlayerStats
     {
         public static void Write(string logMessage)
         {
-            StreamWriter log;
-            FileStream fileStream = null;
-            DirectoryInfo logDirInfo = null;
-            FileInfo logFileInfo;
+            try
+            {
 
-            string logFilePath = Path.Combine(Environment.GetFolderPath(
-                Environment.SpecialFolder.ApplicationData), "AutoPlayerStats\\" + "Log-" + DateTime.Today.ToString("MM-dd-yyyy") + "." + "log");
-            logFileInfo = new FileInfo(logFilePath);
-            logDirInfo = new DirectoryInfo(logFileInfo.DirectoryName);
-            if (!logDirInfo.Exists) logDirInfo.Create();
-            if (!logFileInfo.Exists)
-            {
-                fileStream = logFileInfo.Create();
+
+                StreamWriter log;
+                FileStream fileStream = null;
+                DirectoryInfo logDirInfo = null;
+                FileInfo logFileInfo;
+
+                string logFilePath = Path.Combine(Environment.GetFolderPath(
+                    Environment.SpecialFolder.ApplicationData), "AutoPlayerStats\\" + "Log-" + DateTime.Today.ToString("MM-dd-yyyy") + "." + "log");
+                logFileInfo = new FileInfo(logFilePath);
+                logDirInfo = new DirectoryInfo(logFileInfo.DirectoryName);
+                if (!logDirInfo.Exists) logDirInfo.Create();
+                if (!logFileInfo.Exists)
+                {
+                    fileStream = logFileInfo.Create();
+                }
+                else
+                {
+                    fileStream = new FileStream(logFilePath, FileMode.Append);
+                }
+                log = new StreamWriter(fileStream);
+                log.WriteLine(logMessage);
+                log.Close();
             }
-            else
+            catch
             {
-                fileStream = new FileStream(logFilePath, FileMode.Append);
+                // File is unwritable - what do you even do at that point? Can't exactly log the error lmao. Ran into this so im just wrapping it in a try-catch.
+                // Lazy solution, I know, but it'll work as a patch for now.
             }
-            log = new StreamWriter(fileStream);
-            log.WriteLine(logMessage);
-            log.Close();
         }
     }
 }

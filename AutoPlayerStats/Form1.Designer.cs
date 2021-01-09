@@ -34,7 +34,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.playerPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.playerDisplay = new System.Windows.Forms.FlowLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -94,13 +94,13 @@
             this.label5.TabIndex = 10;
             this.label5.Text = "Yellow: Under 10 games played";
             // 
-            // playerPanel
+            // playerDisplay
             // 
-            this.playerPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.playerPanel.Location = new System.Drawing.Point(12, 12);
-            this.playerPanel.Name = "playerPanel";
-            this.playerPanel.Size = new System.Drawing.Size(1016, 744);
-            this.playerPanel.TabIndex = 11;
+            this.playerDisplay.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.playerDisplay.Location = new System.Drawing.Point(12, 12);
+            this.playerDisplay.Name = "playerDisplay";
+            this.playerDisplay.Size = new System.Drawing.Size(1016, 744);
+            this.playerDisplay.TabIndex = 11;
             // 
             // label6
             // 
@@ -181,7 +181,7 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.playerPanel);
+            this.Controls.Add(this.playerDisplay);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -206,7 +206,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.FlowLayoutPanel playerPanel;
+        private System.Windows.Forms.FlowLayoutPanel playerDisplay;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
