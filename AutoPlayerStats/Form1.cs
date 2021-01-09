@@ -51,12 +51,12 @@ namespace AutoPlayerStats
             watcher.EnableRaisingEvents = true;
         }
 
-        public void OnChanged(object source, FileSystemEventArgs e)
+        public void OnChanged(object source, FileSystemEventArgs e) // Rewrite this entirely - it's decently inefficent and doesnt work in some cases
         {
             Form1 frm1 = (Form1)Application.OpenForms["Form1"];
 
             List<string> text = new List<string>();
-            while (!IsFileReady(e.FullPath)) { }; // Wait
+            while (!IsFileReady(e.FullPath)) { }; // Wait for file to be accessable
             try
             {
                 text = File.ReadAllLines(e.FullPath).Reverse().Take(2).ToList();
@@ -68,7 +68,7 @@ namespace AutoPlayerStats
             List<Player> players = new List<Player>();
             foreach (string i in text)
             {
-                if (i.Contains("[Client thread/INFO]: [CHAT] ONLINE:"))
+                if (i.Contains("[Client thread/INFO]: [CHAT] ONLINE:")) // TODO: Add playerjoin/playerleave Autodetect
                 {
                     string[] names = i.Split(new string[] { "[Client thread/INFO]: [CHAT] ONLINE:" }, StringSplitOptions.None)[1].Split(',');
                     foreach (string name in names)
@@ -97,11 +97,19 @@ namespace AutoPlayerStats
             {
                 thread.Join();
             }
-            playerPanel.Invoke((MethodInvoker)delegate { playerPanel.Controls.Clear(); });
+            playerDisplay.Invoke((MethodInvoker)delegate { playerDisplay.Controls.Clear(); }); // Clear all players
             players = players.OrderByDescending(x => x.FKDR).ToList();
+            List <PlayerPanel> panels = new List<PlayerPanel>();
             foreach (Player player in players)
             {
-                playerPanel.Invoke((MethodInvoker)delegate { playerPanel.Controls.Add(player.Panel); });
+                PlayerPanel panel = new PlayerPanel(player);
+                panel.Populate();
+                panels.Add(panel);
+            }
+
+            foreach (PlayerPanel panel in panels)
+            {
+                playerDisplay.Invoke((MethodInvoker)delegate { playerDisplay.Controls.Add(panel); });
             }
             // Display API count
             Thread.Sleep(2500);
@@ -128,6 +136,8 @@ namespace AutoPlayerStats
             {
                 LogWriter.Write("Error in getting API uses\n" + ex);
             }
+
+            LogWriter.Write("CONTROLS COUNT " + playerDisplay.Controls.Count.ToString());
         }
 
         public static bool IsFileReady(string filename)

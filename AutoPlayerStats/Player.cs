@@ -31,9 +31,10 @@ namespace AutoPlayerStats
 
         public void CallAPI()
         {
+            LogWriter.Write("Calling API for " + this.Name);
             Form1 frm1 = (Form1)Application.OpenForms["Form1"];
             int count = 1;
-            int maxtries = 3;
+            int maxtries = 1;
             while (count <= maxtries)
             {
                 try
@@ -120,113 +121,6 @@ namespace AutoPlayerStats
                     break;
                 }
             }
-
-
-            // TODO: Make new panel system! Customizable controls & such, maybe arrange horizontal instead of vertical like the other overlays do.
-            // Also, honestly can't imagine the bwstats guy would be very happy with me for opensourcing all this, but maybe try to integrate their hacker/sniper database?
-            // (I have now found their API - unsure if its meant to be public, but will probably integrate soon unless he says otherwise)
-
-            var labelName = new Label();
-            labelName.AutoSize = true;
-            labelName.Location = new Point(5, 0);
-            labelName.Font = new Font(labelName.Font, FontStyle.Bold);
-            labelName.Text = Name;
-            if (IsSuspectedParty)
-                labelName.Text = Name + " (Party)"; // TODO: Temporary! Redo this all during the panel rewrite
-
-            var labelStars = new Label();
-            labelStars.AutoSize = true;
-            labelStars.Location = new Point(5, labelName.Height);
-            labelStars.Text = "Stars: " + Stars.ToString() + "  Winstreak: " + Winstreak.ToString();
-
-            var labelFKDR = new Label();
-            labelFKDR.AutoSize = true;
-            labelFKDR.Location = new Point(5, labelName.Height + labelStars.Height);
-            labelFKDR.Text = "FKDR: " + new string(FKDR.ToString().Take(5).ToArray()) + "  Finals: " + Finals.ToString();
-
-            var panel = new Panel();
-            panel.AutoSize = true;
-            panel.BorderStyle = BorderStyle.FixedSingle;
-            panel.BackColor = getColor(this);
-
-            panel.Controls.Add(labelName);
-            panel.Controls.Add(labelStars);
-            panel.Controls.Add(labelFKDR);
-
-            panel.Click += pClick;
-            foreach (Control child in panel.Controls)
-            {
-                child.Click += childClick;
-            }
-
-            this.Panel = panel;
         }
-
-        void childClick(object sender, EventArgs e)
-        {
-            pClick(((Label)sender).Parent, EventArgs.Empty);
-        }
-
-        void pClick(object sender, EventArgs e)
-        {
-            string name = ((Panel)sender).Controls[0].Text;
-
-            DialogResult result = MessageBox.Show("Whitelist or Blacklist " + name, name, MessageBoxButtons.YesNoCancel);
-
-            if (result == DialogResult.Yes) // Whitelist
-            {
-                if (Properties.Settings.Default.eList.Contains(name))
-                {
-                    Properties.Settings.Default.eList.Remove(name);
-                }
-                Properties.Settings.Default.fList.Add(name);
-                Properties.Settings.Default.Save();
-            }
-            else if (result == DialogResult.No) // Blacklist
-            {
-                if (Properties.Settings.Default.fList.Contains(name))
-                {
-                    Properties.Settings.Default.fList.Remove(name);
-                }
-                Properties.Settings.Default.eList.Add(name);
-                Properties.Settings.Default.Save();
-            }
-
-            Form1.fixLists();
-        }
-
-        public static Color getColor(Player player)
-        {
-            if (Properties.Settings.Default.fList.Contains(player.Name))
-            {
-                return Color.Green;
-            }
-            if (Properties.Settings.Default.eList.Contains(player.Name))
-            {
-                return Color.Red;
-            }
-            if (player.IsNick)
-            {
-                return Color.LightBlue;
-            }
-            if (player.Stars <= 5 && player.FKDR >= 2.25)
-            {
-                return Color.DarkRed;
-            }
-            if (player.GamesPlayed <= 10)
-            {
-                return Color.Yellow;
-            }
-            if (player.Winstreak >= 5)
-            {
-                return Color.RoyalBlue;
-            }
-            if (player.FKDR >= 5)
-            {
-                return Color.Orange;
-            }
-            return Color.White;
-        }
-
     }
 }
