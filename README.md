@@ -1,5 +1,7 @@
 # Auto Player Stats
 
+THIS APPLICATION IS NO LONGER RELEVENT OR SUPPORTED. USE https://github.com/EthanHarv/HypixelStats INSTEAD.
+
 Very janky, just something I threw together in a 6 hour marathon for fun.
 
 Updates coming to make MUCH more dynamic - selectable endpoints (for different gamemodes) and layouts!
